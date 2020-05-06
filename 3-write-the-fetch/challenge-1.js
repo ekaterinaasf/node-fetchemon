@@ -48,3 +48,39 @@ log(new Date().toLocaleString());
 
 // the pokemon who's next evolution is named Starmie
 // Staryu evolves into Starmie when exposed to a Water Stone.
+const URL = "https://pokeapi.co/api/v2/pokemon-species/120/";
+
+log("fetching " + URL + " ...");
+const dotDotDot = setInterval(() => log("..."), 100);
+
+const main = async (URL) => {
+  try {
+    const res = await nodeFetch(URL);
+    log("testing response ...");
+    assert.strictEqual(res.ok, true);
+    assert.strictEqual(res.status, 200);
+
+    log("parsing response ...");
+    const data = await res.json();
+
+    log("testing data ...");
+    assert.strictEqual(
+      data.evolution_chain.url,
+      "https://pokeapi.co/api/v2/evolution-chain/56/"
+    );
+    log("testing evolution data ...");
+    const chain = await nodeFetch(data.evolution_chain.url);
+    const evol = await chain.json();
+    let evolName = evol.chain.evolves_to[0];
+    //console.log(evolName);
+    assert.strictEqual(evolName.species.name, "starmie");
+    assert.deepStrictEqual(evol.chain.species.name, "staryu");
+
+    log("... PASS!");
+  } catch (err) {
+    log(err.stack);
+  }
+  clearInterval(dotDotDot);
+};
+
+main(URL);
