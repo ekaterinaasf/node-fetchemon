@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      url = "https://pokeapi.co/api/v2/";
+      path = "pokemon?limit=151'";
+      fetch(url + path)
+        .then((res) => res.json())
+        .then((allpokemon) => {
+          allpokemon.results.forEach((element) => {
+            fetchPokemonData(element);
+          });
+        });
+
+      function fetchPokemonData(pokemon) {
+        let url = pokemon.url; // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
+        fetch(url)
+          .then((response) => response.json())
+          .then((element) => {
+            if (
+              element.cost === 3000 &&
+              element.fling_power === 30 &&
+              element.fling_effect === null &&
+              element.baby_trigger_for === null
+            ) {
+              //element.baby_trigger_for === null
+              console.log(element);
+              console.log(element.url);
+              return;
+            }
+          });
+      }
+    </script>
+  </body>
+</html>
