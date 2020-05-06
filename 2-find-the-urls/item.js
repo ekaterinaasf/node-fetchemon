@@ -62,9 +62,9 @@ const main = async (URL) => {
 
     log("testing data ...");
     assert.strictEqual(data.cost, 3000);
-    //assert.strictEqual(data.fling_power, 30);
-    //assert.strictEqual(data.fling_effect, null);
-    //assert.strictEqual(data.baby_trigger_for, null);
+    assert.strictEqual(data.fling_power, 30);
+    assert.strictEqual(data.fling_effect, null);
+    assert.strictEqual(data.baby_trigger_for, null);
 
     log("... PASS!");
   } catch (err) {
@@ -72,4 +72,4 @@ const main = async (URL) => {
   }
 };
 
-main("https://pokeapi.co/api/v2/pokemon?cost=3000&fling_power=30");
+main("https://pokeapi.co/api/v2/item?cost=3000&fling_power=30");

@@ -8,34 +8,38 @@
   </head>
   <body>
     <script>
-      url = "https://pokeapi.co/api/v2/";
-      path = "pokemon?limit=151'";
-      fetch(url + path)
-        .then((res) => res.json())
-        .then((allpokemon) => {
-          allpokemon.results.forEach((element) => {
-            fetchPokemonData(element);
+      //url = "https://pokeapi.co/api/v2/";
+      //path = "pokemon?limit=151'";
+
+      function fetchKantoPokemon() {
+        fetch("https://pokeapi.co/api/v2/item?limit=151")
+          //fetch("https://pokeapi.co/api/v2/pokemon/?offset=80&limit=100")
+          .then((response) => response.json())
+          .then(function (allpokemon) {
+            allpokemon.results.forEach((pokemon) => {
+              fetchPokemonData(pokemon);
+            });
           });
-        });
+      }
 
       function fetchPokemonData(pokemon) {
-        let url = pokemon.url; // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
+        let url = pokemon.url;
         fetch(url)
           .then((response) => response.json())
-          .then((element) => {
+          .then((pokeData) => {
             if (
-              element.cost === 3000 &&
-              element.fling_power === 30 &&
-              element.fling_effect === null &&
-              element.baby_trigger_for === null
+              pokeData.cost === 3000 &&
+              pokeData.fling_power === 30 &&
+              pokeData.fling_effect === null &&
+              pokeData.baby_trigger_for === null
             ) {
-              //element.baby_trigger_for === null
-              console.log(element);
-              console.log(element.url);
-              return;
+              console.log("cost=3000 ");
+              console.log(pokeData);
             }
           });
       }
+
+      fetchKantoPokemon();
     </script>
   </body>
 </html>
