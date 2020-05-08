@@ -47,3 +47,28 @@ log(new Date().toLocaleString());
 // --- begin main script ---
 
 // the type with 28 moves, 7 names, and 72 items
+const DB_FILE = __dirname + "/../pokemon.json";
+const OUTPUT_FILE = __dirname + "/../pokemon2.json";
+
+function parsePokemons() {
+  const pokemons = fs.readFile(DB_FILE, "utf8", (err, data) => {
+    if (err) throw err;
+    for (el in JSON.parse(data)) {
+      console.log("Name: " + el.name);
+    }
+    //data.map(console.log("Name: " + data.name));
+  });
+}
+
+function eachPokemon(pokemon) {
+  if (
+    pokemon.moves.length === 28 &&
+    pokemon.names.length === 7 &&
+    pokemon.items.length === 72
+  ) {
+    console.log(pokemon.name);
+    fs.appendFileSync(OUTPUT_FILE, "challenge-3: " + pokemon.name);
+  }
+}
+
+parsePokemons();
